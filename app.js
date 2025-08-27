@@ -1,9 +1,9 @@
 const express = require("express");
 const morgan = require("morgan");
 const app = express(); //by default the express package is closed but open after this line call the express()
-const dbConnection = require("./config/db");
+const dbconnection = require("./config/db");
 const userModel = require("./models/user");
-
+const { render } = require("ejs");
 app.use(morgan("dev"));
 
 app.use(express.json()); //buildIn middlewares to get data in (req.body)
@@ -38,15 +38,13 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
-app.post("/register", async (req, res) => {
+app.post("/register", async(req, res) => {
   const { username, email, password } = req.body;
-
-  const newUser = await userModel.create({
+  const newUser= await userModel.create({
     username: username,
     email: email,
     password: password,
   });
-
   res.send(newUser);
 });
 
