@@ -34,7 +34,6 @@ app.get("/profile", (req, res) => {
   res.send("Profile Page");
 });
 
-
 // Creating a user and save it to data base
 app.get("/register", (req, res) => {
   res.render("register");
@@ -50,7 +49,7 @@ app.post("/register", async (req, res) => {
   res.send(newUser);
 });
 
-// Read the user which stored in data base 
+// Read the user which stored in data base
 app.get("/get-users", (req, res) => {
   userModel
     .find({
@@ -59,6 +58,27 @@ app.get("/get-users", (req, res) => {
     .then((users) => {
       res.send(users);
     });
+});
+
+// UPDATING THE USER
+app.get("/update-user", async (req, res) => {
+  await userModel.findOneAndUpdate(
+    {
+      username: "divyanshi",
+    },
+    {
+      email: "dibbu@1404.com",
+    }
+  );
+  res.send("User Updated");
+});
+
+// DELETING USER
+app.get("/delete-user", async (req, res) => {
+  await userModel.findOneAndDelete({
+    username: "a",
+  });
+  res.send("User-Deleted");
 });
 
 app.post("/get-form-data", (req, res) => {
